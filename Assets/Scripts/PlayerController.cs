@@ -13,26 +13,47 @@ public class PlayerController : MonoBehaviour
     public enum CardinalDirection{ North, East, South, West}
     CardinalDirection faceDirection;
 
+    // Phase States
+    public enum PhaseState{ Light, Shadow }
+    PhaseState phaseState;
+
     // Events
     public event EventHandler<CardinalDirection> OnCardinalChanged;
+    public event EventHandler<PhaseState> OnPhaseChanged;
 
     void Start()
     {
         faceDirection = CardinalDirection.North;
+        phaseState = PhaseState.Light;
+
         OnCardinalChanged?.Invoke(this, faceDirection);
+        OnPhaseChanged?.Invoke(this, phaseState);
     }
 
     void Update()
     {
         HandleTurnInput();
         HandleMoveInput(); // TEMP NOT FINAL
+
+        HandlePhaseInput();
+    }
+
+    void HandlePhaseInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (String.Compare(phaseState.ToString(), "Light") == 0) phaseState = PhaseState.Shadow;
+            else phaseState = PhaseState.Light;
+
+            OnPhaseChanged?.Invoke(this, phaseState);
+        }
     }
 
     void HandleMoveInput()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (IsWallAhead()) return;
+            if (phaseState == PhaseState.Light && IsWallAhead()) return;
             transform.position += transform.forward * speed;
         }
     }
