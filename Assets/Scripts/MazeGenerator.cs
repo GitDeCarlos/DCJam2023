@@ -23,7 +23,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f));
+                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
                 MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
                 nodes.Add(newNode);
             }
@@ -135,7 +135,7 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f));
+                Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
                 MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
                 nodes.Add(newNode);
 
