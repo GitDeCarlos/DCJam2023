@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NodeState
-{
-    Available,
-    Current,
-    Completed
-}
+public enum NodeState { Available, Current, Completed }
 
 public class MazeNode : MonoBehaviour
 {
     [SerializeField] GameObject[] walls;
     [SerializeField] MeshRenderer floor;
+    [SerializeField] Material lightMaterial;
+    [SerializeField] Material darkMaterial;
+
+    void Start()
+    {
+        foreach (GameObject gameObject in walls)
+        {
+            MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.material = lightMaterial;
+            }
+        }
+    }
 
     public void RemoveWall(int wallToRemove)
     {

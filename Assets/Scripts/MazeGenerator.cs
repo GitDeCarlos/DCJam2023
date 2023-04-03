@@ -6,15 +6,16 @@ public class MazeGenerator : MonoBehaviour
 {
     [SerializeField] MazeNode nodePrefab;
     [SerializeField] Vector2Int mazeSize;
+    [SerializeField] Vector3 mazeOffset;
     [SerializeField] float nodeSize;
 
     private void Start()
     {
-        GenerateMazeInstant(mazeSize);
+        GenerateMazeInstant(mazeSize, mazeOffset);
         //StartCoroutine(GenerateMaze(mazeSize));
     }
 
-    void GenerateMazeInstant(Vector2Int size)
+    void GenerateMazeInstant(Vector2Int size, Vector3 offset)
     {
         List<MazeNode> nodes = new List<MazeNode>();
 
@@ -24,7 +25,7 @@ public class MazeGenerator : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
-                MazeNode newNode = Instantiate(nodePrefab, nodePos, Quaternion.identity, transform);
+                MazeNode newNode = Instantiate(nodePrefab, nodePos + offset, Quaternion.identity, transform);
                 nodes.Add(newNode);
             }
         }
@@ -34,7 +35,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Choose starting node
         currentPath.Add(nodes[Random.Range(0, nodes.Count)]);
-        currentPath[0].SetState(NodeState.Current);
+        //currentPath[0].SetState(NodeState.Current);
 
         while (completedNodes.Count < nodes.Count)
         {
@@ -114,18 +115,18 @@ public class MazeGenerator : MonoBehaviour
                 }
 
                 currentPath.Add(chosenNode);
-                chosenNode.SetState(NodeState.Current);
+                //chosenNode.SetState(NodeState.Current);
             }
             else
             {
                 completedNodes.Add(currentPath[currentPath.Count - 1]);
 
-                currentPath[currentPath.Count - 1].SetState(NodeState.Completed);
+                //currentPath[currentPath.Count - 1].SetState(NodeState.Completed);
                 currentPath.RemoveAt(currentPath.Count - 1);
             }
         }
     }
-
+    /*
     IEnumerator GenerateMaze(Vector2Int size)
     {
         List<MazeNode> nodes = new List<MazeNode>();
@@ -240,5 +241,5 @@ public class MazeGenerator : MonoBehaviour
 
             yield return new WaitForSeconds(0.05f);
         }
-    }
+    }*/
 }
