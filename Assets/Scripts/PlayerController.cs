@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float turnIncrement = 90f;
     [SerializeField] float speed = 1f;
 
+    public InventoryObject inventory;
+
     // Cardinal States
     public enum CardinalDirection{ North, East, South, West}
     CardinalDirection faceDirection;
@@ -95,5 +97,19 @@ public class PlayerController : MonoBehaviour
             // Invoke UI Update
             OnCardinalChanged?.Invoke(this, faceDirection);
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        var item = other.GetComponent<Item>();
+        if (item){
+             inventory.AddItem(item.item, 1);
+             Destroy(other.gameObject);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
     }
 }
