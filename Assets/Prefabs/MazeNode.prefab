@@ -931,6 +931,8 @@ MonoBehaviour:
   - {fileID: 3621978223113766159}
   - {fileID: 6784739110643568811}
   - {fileID: 1600639753256433465}
+  landmineTrigger: {fileID: 4391226071791882615, guid: 393364eed3e612d44bc15b32a71476db,
+    type: 3}
   floor: {fileID: 3769450312677824590}
   lightMaterial: {fileID: 2100000, guid: fa48625e16287fa4daba524fa5dd5d78, type: 2}
   darkMaterial: {fileID: 2100000, guid: 77c2e7d83b7543d44989b97f65d04f10, type: 2}

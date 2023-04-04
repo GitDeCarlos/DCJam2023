@@ -7,9 +7,12 @@ public enum NodeState { Available, Current, Completed }
 public class MazeNode : MonoBehaviour
 {
     [SerializeField] GameObject[] walls;
+    [SerializeField] GameObject landmineTrigger;
     [SerializeField] MeshRenderer floor;
     [SerializeField] Material lightMaterial;
     [SerializeField] Material darkMaterial;
+
+    
 
     void Start()
     {
@@ -21,6 +24,8 @@ public class MazeNode : MonoBehaviour
                 meshRenderer.material = lightMaterial;
             }
         }
+
+        Instantiate(landmineTrigger, transform);
     }
 
     public void RemoveWall(int wallToRemove)
