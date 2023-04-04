@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7ad9cfb5e5ca640afa4f2ffb2fca67, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 7480068167453305293, guid: 380ab29776864f64ca97af296f110039, type: 3}
   type: 1
   description: 
   restoreHealth: 10
