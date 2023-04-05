@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,14 @@ public class MazeNode : MonoBehaviour
     [SerializeField] Material lightMaterial;
     [SerializeField] Material darkMaterial;
 
-    
+    MeshRenderer meshRenderer;
+    PlayerController playerEvents;
 
     void Start()
     {
         foreach (GameObject gameObject in walls)
         {
-            MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer != null)
             {
                 meshRenderer.material = lightMaterial;
@@ -26,6 +28,36 @@ public class MazeNode : MonoBehaviour
         }
 
         Instantiate(landmineTrigger, transform);
+
+        playerEvents = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerEvents.OnPhaseEntered += ChangeToPhasedMaterial;
+        playerEvents.OnPhaseExited += ChangeToLightMaterial;
+    }
+
+    private void ChangeToLightMaterial(object sender, EventArgs e)
+    {
+        foreach (GameObject gameObject in walls)
+        {
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.material = lightMaterial;
+            }
+        }
+        //floor.material = lightMaterial;
+    }
+
+    private void ChangeToPhasedMaterial(object sender, EventArgs e)
+    {
+        foreach (GameObject gameObject in walls)
+        {
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.material = darkMaterial;
+            }
+        }
+        //loor.material = darkMaterial;
     }
 
     public void RemoveWall(int wallToRemove)

@@ -935,4 +935,4 @@ MonoBehaviour:
     type: 3}
   floor: {fileID: 3769450312677824590}
   lightMaterial: {fileID: 2100000, guid: fa48625e16287fa4daba524fa5dd5d78, type: 2}
-  darkMaterial: {fileID: 2100000, guid: 77c2e7d83b7543d44989b97f65d04f10, type: 2}
+  darkMaterial: {fileID: 2100000, guid: b1d93e92d4adca84d9e77d0e9ea4d357, type: 2}
