@@ -10,6 +10,7 @@ public class MazeNode : MonoBehaviour
     [SerializeField] MeshRenderer floor;
     [SerializeField] Material lightMaterial;
     [SerializeField] Material darkMaterial;
+    public Vector3 pos;
 
     void Start()
     {
