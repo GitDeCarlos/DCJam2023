@@ -17,34 +17,66 @@ public class PlayerController : MonoBehaviour
     public enum PhaseState{ Light, Shadow }
     PhaseState phaseState;
 
+    // Player States
+    public enum PlayerState{ Moving, InInventory, InEncounter }
+    PlayerState playerState;
+
     // Events
     public event EventHandler<CardinalDirection> OnCardinalChanged;
     public event EventHandler<PhaseState> OnPhaseChanged;
-
+    public event EventHandler OnPhaseEntered;
+    public event EventHandler OnPhaseExited;
     void Start()
     {
         faceDirection = CardinalDirection.North;
         phaseState = PhaseState.Light;
+        playerState = PlayerState.Moving;
 
         OnCardinalChanged?.Invoke(this, faceDirection);
         OnPhaseChanged?.Invoke(this, phaseState);
+
+        EncounterController encounterController = GameObject.Find("EncounterController").GetComponent<EncounterController>();
+        encounterController.OnEncounterTrigger += EncounterEntered;
+        encounterController.OnEncounterEnded += EncounterExited;
     }
 
     void Update()
     {
-        HandleTurnInput();
-        HandleMoveInput(); // TEMP NOT FINAL
 
-        HandlePhaseInput();
+        switch (playerState)
+        {
+            case PlayerState.Moving:
+                HandleMoveInput();
+                //HandleTurnInput();
+                //HandlePhaseInput();
+                break;
+            case PlayerState.InEncounter:
+                break;
+        }
+    }
+
+    void HandleMoveState()
+    {
+        HandleMoveInput();
     }
 
     void HandlePhaseInput()
     {
+        if (playerState != PlayerState.Moving) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (String.Compare(phaseState.ToString(), "Light") == 0) phaseState = PhaseState.Shadow;
-            else phaseState = PhaseState.Light;
-
+            if (String.Compare(phaseState.ToString(), "Light") == 0)
+            {
+                phaseState = PhaseState.Shadow;
+                OnPhaseEntered?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                phaseState = PhaseState.Light;
+                OnPhaseExited?.Invoke(this, EventArgs.Empty);
+            }
+            
             OnPhaseChanged?.Invoke(this, phaseState);
         }
     }
@@ -56,6 +88,18 @@ public class PlayerController : MonoBehaviour
             if (phaseState == PhaseState.Light && IsWallAhead()) return;
             transform.position += transform.forward * speed;
         }
+        HandlePhaseInput();
+        HandleTurnInput();
+
+    }
+
+    private void EncounterEntered(object sender, EncounterScriptableObject e)
+    {
+        playerState = PlayerState.InEncounter;
+    }
+    private void EncounterExited(object sender, EventArgs e)
+    {
+        playerState = PlayerState.Moving;
     }
 
     bool IsWallAhead()
