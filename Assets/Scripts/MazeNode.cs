@@ -10,8 +10,7 @@ public class MazeNode : MonoBehaviour
     [SerializeField] GameObject[] walls;
     [SerializeField] GameObject landmineTrigger;
     [SerializeField] MeshRenderer floor;
-    /*[SerializeField] Material lightMaterial;
-    [SerializeField] Material darkMaterial;*/
+    public Vector3 pos;
 
     [SerializeField] DataScriptableObject materialData;
 

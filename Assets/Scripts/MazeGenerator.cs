@@ -8,17 +8,17 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] Vector2Int mazeSize;
     [SerializeField] Vector3 mazeOffset;
     [SerializeField] float nodeSize;
+    List<MazeNode> nodes = new List<MazeNode>();
 
     private void Start()
     {
         GenerateMazeInstant(mazeSize, mazeOffset);
-        //StartCoroutine(GenerateMaze(mazeSize));
+        CreateExit(mazeSize, mazeOffset);
+        
     }
 
     void GenerateMazeInstant(Vector2Int size, Vector3 offset)
     {
-        List<MazeNode> nodes = new List<MazeNode>();
-
         // Create nodes
         for (int x = 0; x < size.x; x++)
         {
@@ -26,6 +26,7 @@ public class MazeGenerator : MonoBehaviour
             {
                 Vector3 nodePos = new Vector3(x - (size.x / 2f), 0, y - (size.y / 2f)) * nodeSize;
                 MazeNode newNode = Instantiate(nodePrefab, nodePos + offset, Quaternion.identity, transform);
+                newNode.pos = nodePos;
                 nodes.Add(newNode);
             }
         }
@@ -125,5 +126,64 @@ public class MazeGenerator : MonoBehaviour
                 currentPath.RemoveAt(currentPath.Count - 1);
             }
         }
+    }
+
+    void CreateExit(Vector2Int size, Vector3 offset)
+    {
+        // 1 North: max Z
+        // 2 South: 0 Z
+        // 3 East: max X
+        // 4 West: 0 X
+        int direction = Random.Range(0, 4);
+        int x;
+        int z;
+
+        switch(direction+1){
+            case 1:
+                x = EvenRandom(-size.x, size.x);
+                z = size.y-2;
+
+                SearchForNode(x,z).RemoveWall(2);
+                break;
+            case 2:
+                x = EvenRandom(-size.x, size.x);
+                z = -size.y;
+
+                SearchForNode(x,z).RemoveWall(3);
+                break;
+            case 3:
+                x = size.x-2;
+                z = EvenRandom(-size.y, size.y);
+
+                SearchForNode(x,z).RemoveWall(0);
+                break;
+            case 4:
+                x = -size.x;
+                z = EvenRandom(-size.y, size.y);
+
+                SearchForNode(x,z).RemoveWall(1);
+                break;
+        }
+    }
+
+    int EvenRandom(int min, int max)
+    {
+        int randint = Random.Range(min, max);
+        while(randint % 2 != 0) {
+            randint = Random.Range(min, max);
+        }
+
+        return randint; 
+    }
+
+    MazeNode SearchForNode(int x, int z)
+    {
+        for(int i = 0; i < nodes.Count; i++){
+            if(nodes[i].pos.x == x && nodes[i].pos.z == z){
+                return nodes[i];
+            }
+        }
+
+        return null;
     }
 }
