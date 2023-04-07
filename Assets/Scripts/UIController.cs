@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI phaseStateText;
 
     [Header("Encounter UI Components")]
-    [SerializeField] Image encounterUIPanel;
+    [SerializeField] GameObject encounterUIContainer;
     [SerializeField] Image encounterUIImage;
     [SerializeField] TextMeshProUGUI encounterUIText;
 
@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
     {
         if (isUIActive)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 ClearUI();
                 encounterController.EndEncounter();
@@ -48,19 +48,16 @@ public class UIController : MonoBehaviour
 
     private void ClearUI()
     {
-        encounterUIPanel.enabled = false;
-        encounterUIImage.enabled = false;
-        encounterUIText.enabled = false;
+
+        encounterUIContainer.SetActive(false);
     }
 
     private void ShowEncounterUI(object sender, EncounterScriptableObject e)
     {
         isUIActive = true;
 
-        encounterUIPanel.enabled = true;
-        encounterUIImage.enabled = true;
-        encounterUIText.enabled = true;
-;
+        encounterUIContainer.SetActive(true);
+
         encounterUIImage.sprite = e.encounterSprite;
         encounterUIText.text = "Found " + e.encounterType + ": " + e.name;
     }

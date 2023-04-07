@@ -3,7 +3,12 @@ guid: c1a1e4c3e5cc9f944a1dc56b2d557b3e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - landmineTrigger: {instanceID: 0}
+  - floor: {instanceID: 0}
+  - lightMaterial: {instanceID: 0}
+  - darkMaterial: {instanceID: 0}
+  - materialData: {fileID: 11400000, guid: 3fe98afc8f7256341bef102657498590, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

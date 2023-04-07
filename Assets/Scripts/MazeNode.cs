@@ -10,8 +10,10 @@ public class MazeNode : MonoBehaviour
     [SerializeField] GameObject[] walls;
     [SerializeField] GameObject landmineTrigger;
     [SerializeField] MeshRenderer floor;
-    [SerializeField] Material lightMaterial;
-    [SerializeField] Material darkMaterial;
+    /*[SerializeField] Material lightMaterial;
+    [SerializeField] Material darkMaterial;*/
+
+    [SerializeField] DataScriptableObject materialData;
 
     MeshRenderer meshRenderer;
     PlayerController playerEvents;
@@ -23,7 +25,7 @@ public class MazeNode : MonoBehaviour
             meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer != null)
             {
-                meshRenderer.material = lightMaterial;
+                meshRenderer.material = materialData.lightWallMaterial;
             }
         }
 
@@ -41,7 +43,7 @@ public class MazeNode : MonoBehaviour
             meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer != null)
             {
-                meshRenderer.material = lightMaterial;
+                meshRenderer.material = materialData.lightWallMaterial;
             }
         }
         //floor.material = lightMaterial;
@@ -54,7 +56,7 @@ public class MazeNode : MonoBehaviour
             meshRenderer = gameObject.GetComponent<MeshRenderer>();
             if (meshRenderer != null)
             {
-                meshRenderer.material = darkMaterial;
+                meshRenderer.material = materialData.darkWallMaterial;
             }
         }
         //loor.material = darkMaterial;

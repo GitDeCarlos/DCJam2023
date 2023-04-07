@@ -934,5 +934,4 @@ MonoBehaviour:
   landmineTrigger: {fileID: 4391226071791882615, guid: 393364eed3e612d44bc15b32a71476db,
     type: 3}
   floor: {fileID: 3769450312677824590}
-  lightMaterial: {fileID: 2100000, guid: fa48625e16287fa4daba524fa5dd5d78, type: 2}
-  darkMaterial: {fileID: 2100000, guid: b1d93e92d4adca84d9e77d0e9ea4d357, type: 2}
+  materialData: {fileID: 11400000, guid: 3fe98afc8f7256341bef102657498590, type: 2}
